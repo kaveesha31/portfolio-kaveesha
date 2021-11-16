@@ -16,7 +16,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          kaveesha
+          Kaveesha Rathnayaka
         </a>
       </header>
     </div>
