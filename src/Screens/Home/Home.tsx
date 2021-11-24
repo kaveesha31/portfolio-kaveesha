@@ -198,11 +198,11 @@ const Home = () => {
                                     </div>
                                     <div className="service-content">
                                         <h2 className="s-title">Web Design</h2>
-                                        <p className="s-description text-center">
+                                        {/* <p className="s-description text-center">
                                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni adipisci eaque autem fugiat! Quia,
                                             provident vitae! Magni
                                             tempora perferendis eum non provident.
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </div>
                             </div>
@@ -213,11 +213,11 @@ const Home = () => {
                                     </div>
                                     <div className="service-content">
                                         <h2 className="s-title">Web Development</h2>
-                                        <p className="s-description text-center">
+                                        {/* <p className="s-description text-center">
                                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni adipisci eaque autem fugiat! Quia,
                                             provident vitae! Magni
                                             tempora perferendis eum non provident.
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </div>
                             </div>
@@ -227,12 +227,12 @@ const Home = () => {
                                         <span className="ico-circle"><i className="bi bi-bar-chart"></i></span>
                                     </div>
                                     <div className="service-content">
-                                        <h2 className="s-title">Photography</h2>
-                                        <p className="s-description text-center">
+                                        <h2 className="s-title">Video Editing</h2>
+                                        {/* <p className="s-description text-center">
                                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni adipisci eaque autem fugiat! Quia,
                                             provident vitae! Magni
                                             tempora perferendis eum non provident.
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </div>
                             </div>
@@ -434,55 +434,176 @@ const Home = () => {
                                 </div>
                             </div>
 
+                            <div className="col-md-4">
+                                <div className="work-box">
+                                    <a href="assets/img/floor.jpg" data-gallery="portfolioGallery" className="portfolio-lightbox">
+                                        <div className="work-img">
+                                            <img style={{ height: "255px" }} src="assets/img/floor.jpg" alt="" className="img-fluid" />
+                                        </div>
+                                    </a>
+                                    <div className="work-content">
+                                        <div className="row">
+                                            <div className="col-sm-8">
+                                                <h2 className="w-title">Automated Floor Mopping Machine
+                                                </h2>
+                                                <div className="w-more">
+                                                    <span className="w-ctegory">Academic Project</span> / <span className="w-date"> Sept. 2017 - Sept. 2018</span>
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-4">
+                                                {/* <div className="w-like">
+                                                    <a href="/carrental"> <span className="bi bi-plus-circle"></span></a>
+                                                </div> */}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </section>
 
-                {/* <div className="testimonials paralax-mf bg-image" style={{ backgroundImage: "url(assets/img/overlay-bg.jpg)" }}>
-                    <div className="overlay-mf"></div>
+                <div className="blog-mf sect-pt4 route">
+                    {/* <div className="overlay-mf"></div> */}
                     <div className="container">
                         <div className="row">
                             <div className="col-md-12">
-
-                                <div className="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
-                                    <div className="swiper-wrapper">
-
-                                        <div className="swiper-slide">
-                                            <div className="testimonial-box">
-                                                <div className="author-test">
-                                                    <img src="assets/img/testimonial-2.jpg" alt="" className="rounded-circle b-shadow-a" />
-                                                    <span className="author">Xavi Alonso</span>
-                                                </div>
-                                                <div className="content-test">
-                                                    <p className="description lead">
-                                                        Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Lorem ipsum dolor sit amet,
-                                                        consectetur adipiscing elit.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="swiper-slide">
-                                            <div className="testimonial-box">
-                                                <div className="author-test">
-                                                    <img src="assets/img/testimonial-4.jpg" alt="" className="rounded-circle b-shadow-a" />
-                                                    <span className="author">Marta Socrate</span>
-                                                </div>
-                                                <div className="content-test">
-                                                    <p className="description lead">
-                                                        Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Lorem ipsum dolor sit amet,
-                                                        consectetur adipiscing elit.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="swiper-pagination"></div>
+                            <div className="col-sm-12">
+                                <div className="title-box text-center">
+                                    <h3 className="title-a">
+                                        Tecnologies
+                                    </h3>
+                                    <div className="line-mf"></div>
                                 </div>
                             </div>
+                            </div>
                         </div>
+                        <div className="row">
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/react.jpg"/></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">React</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/angular.jpg"/></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">Angular</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/Firebase.jpg"/></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">Firebase</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/html.jpg"/></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">HTML</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/css.jpg"/></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">CSS</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/js.jpg"/></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">Javascript</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/bootstrap.jpg"/></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">Bootstrap</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/NodeJS.jpg"/></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">NodeJS</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/MongoDB.jpg"/></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">MongoDB</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{height:"120px"}} alt="" src="assets/img/sql.jpg"/></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">SQL</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/git.jpg"/></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">Git</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/trello.jpg"/></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">Trello</h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                            </div>
                     </div>
-                </div> */}
+                </div>
 
                 {/* <section id="blog" className="blog-mf sect-pt4 route">
                     <div className="container">
