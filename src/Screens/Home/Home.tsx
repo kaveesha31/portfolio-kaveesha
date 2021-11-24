@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase";
 import fire from "../../Config/FirebaseConfig";
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 interface Feedback {
     name: string;
@@ -26,28 +33,30 @@ const Home = () => {
     function saveFeedbackInFirestore(userFirestore: any) {
         const db = firebase.firestore();
         if (userFirestore.subject) {
-          return db.collection("feedback").add(userFirestore);
+            return db.collection("feedback").add(userFirestore);
         } else {
-          throw new Error("Invalid feedback!");
+            throw new Error("Invalid feedback!");
         }
-      }
+    }
 
-    
+
     const handleFeedback = () => {
         return saveFeedbackInFirestore({
-          name: feedback.name,
-          email: feedback.email,
-          subject: feedback.subject,
-          message: feedback.message,
+            name: feedback.name,
+            email: feedback.email,
+            subject: feedback.subject,
+            message: feedback.message,
         })
-          .then((savedUser) => {
-            console.log("Feedback Sent");
-            setFeedback(initFeedback);
-          })
-          .catch((errorFirestore) => {
-            console.log("Save user in Firestore failed - ", errorFirestore.message);
-          });
-      };
+            .then((savedUser) => {
+                setFeedback(initFeedback);
+                console.log("Feedback Sent");
+            })
+            .catch((errorFirestore) => {
+                console.log("Save user in Firestore failed - ", errorFirestore.message);
+            }).finally(()=> {
+                setFeedback(initFeedback);
+            });
+    };
 
     return (
         <div>
@@ -254,9 +263,9 @@ const Home = () => {
                         <div className="row">
                             <div className="col-md-4">
                                 <div className="work-box">
-                                    <a href="assets/img/research-img2.png" data-gallery="portfolioGallery" className="portfolio-lightbox">
+                                    <a href="assets/img/imp-result3-pic.jpg" data-gallery="portfolioGallery" className="portfolio-lightbox">
                                         <div className="work-img">
-                                            <img style={{ height: "255px" }} src="assets/img/research-img2.png" alt="" className="img-fluid" />
+                                            <img style={{ height: "255px" }} src="assets/img/imp-result3-pic.jpg" alt="" className="img-fluid" />
                                         </div>
                                     </a>
                                     <div className="work-content">
@@ -603,61 +612,88 @@ const Home = () => {
                                                     </h5>
                                                 </div>
                                                 <div>
-                                                    <form action="forms/contact.php" method="post" role="form" className="php-email-form">
-                                                        <div className="row">
-                                                            <div className="col-md-12 mb-3">
-                                                                <div className="form-group">
-                                                                    <input type="text" name="name" className="form-control" id="name" placeholder="Your Name" required onChange={(e) => {
+                                                    <Box component="form" noValidate sx={{ mt: 3 }}>
+                                                        <Grid container spacing={2}>
+                                                        <Grid item xs={12}>
+                                                                <TextField
+                                                                    required
+                                                                    fullWidth
+                                                                    id="name"
+                                                                    label="Name"
+                                                                    name="name"
+                                                                    autoComplete="name"
+                                                                    onChange={(e) => {
                                                                         setFeedback({
                                                                             ...feedback,
                                                                             name: e.target.value
                                                                         });
-                                                                    }} />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-12 mb-3">
-                                                                <div className="form-group">
-                                                                    <input type="email" className="form-control" name="email" id="email" placeholder="Your Email" required onChange={(e) => {
+                                                                    }}
+                                                                />
+                                                            </Grid>
+                                                            <Grid item xs={12}>
+                                                                <TextField
+                                                                    required
+                                                                    fullWidth
+                                                                    id="email"
+                                                                    label="Email Address"
+                                                                    name="email"
+                                                                    autoComplete="email"
+                                                                    onChange={(e) => {
                                                                         setFeedback({
                                                                             ...feedback,
                                                                             email: e.target.value
                                                                         });
-                                                                    }} />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-12 mb-3">
-                                                                <div className="form-group">
-                                                                    <input type="text" className="form-control" name="subject" id="subject" placeholder="Subject" required onChange={(e) => {
+                                                                    }}
+                                                                />
+                                                            </Grid>
+                                                            <Grid item xs={12}>
+                                                                <TextField
+                                                                    required
+                                                                    fullWidth
+                                                                    name="subject"
+                                                                    label="Subject"
+                                                                    id="subject"
+                                                                    autoComplete="subject"
+                                                                    onChange={(e) => {
                                                                         setFeedback({
                                                                             ...feedback,
                                                                             subject: e.target.value
                                                                         });
-                                                                    }} />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-12">
-                                                                <div className="form-group">
-                                                                    <textarea className="form-control" name="message" rows={5} placeholder="Message" required onChange={(e) => {
+                                                                    }}
+                                                                />
+                                                            </Grid>
+                                                            <Grid item xs={12}>
+                                                                <TextField
+                                                                    required
+                                                                    fullWidth
+                                                                    name="message"
+                                                                    label="Message"
+                                                                    id="message"
+                                                                    autoComplete="message"
+                                                                    multiline
+                                                                    minRows={5}
+                                                                    onChange={(e) => {
                                                                         setFeedback({
                                                                             ...feedback,
                                                                             message: e.target.value
                                                                         });
-                                                                    }}></textarea>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-12 text-center my-3">
-                                                                <div className="loading">Loading</div>
-                                                                <div className="error-message"></div>
-                                                                <div className="sent-message">Your message has been sent. Thank you!</div>
-                                                            </div>
-                                                            <div className="col-md-12 text-center">
-                                                                <button onClick={(e: any) => {
-                                                                    e.preventDefault();
-                                                                    handleFeedback();
-                                                                }} type="submit" className="button button-a button-big button-rouded">Send Message</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
+                                                                    }}
+                                                                />
+                                                            </Grid>
+                                                        </Grid>
+                                                        <Button
+                                                            type="submit"
+                                                            fullWidth
+                                                            variant="contained"
+                                                            sx={{ mt: 3, mb: 2 }}
+                                                            onClick={(e:any)=>{
+                                                                e.preventDefault();
+                                                                handleFeedback();
+                                                            }}
+                                                        >
+                                                            Send Feedback
+                                                        </Button>
+                                                    </Box>
                                                 </div>
                                             </div>
                                             <div className="col-md-6">

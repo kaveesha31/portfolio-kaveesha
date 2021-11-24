@@ -34,15 +34,15 @@ const BSC = () => {
                                     <div className="swiper-wrapper align-items-center">
 
                                         <div className="swiper-slide">
-                                            <img src="assets/img/bsc.png" alt="" />
+                                            <img src="assets/img/bsc.jpg" alt="" />
                                         </div>
 
                                         <div className="swiper-slide">
-                                            <img src="assets/img/bsc3.png" alt="" />
+                                            <img src="assets/img/bsc3.jpg" alt="" />
                                         </div>
 
                                         <div className="swiper-slide">
-                                            <img src="assets/img/bsc2.png" alt="" />
+                                            <img src="assets/img/bsc2.jpg" alt="" />
                                         </div>
                                     </div>
                                     <div className="swiper-pagination"></div>

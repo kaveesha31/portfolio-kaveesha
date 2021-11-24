@@ -11,8 +11,8 @@ const firebaseConfig = {
   projectId: "kaveesha31gayashanrathnayaka",
   storageBucket: "kaveesha31gayashanrathnayaka.appspot.com",
   messagingSenderId: "797086733617",
-  appId: "1:797086733617:web:3d1ced71296a4e77c14c10",
-  measurementId: "G-0TMYH4MS66"
+  appId: "1:797086733617:web:46ab8ebdc34a5b08c14c10",
+  measurementId: "G-D2C9G9Y11C"
 };
 
 ReactDOM.render(

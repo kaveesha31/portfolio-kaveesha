@@ -34,12 +34,17 @@ const Titan = () => {
                                     <div className="swiper-wrapper align-items-center">
 
                                         <div className="swiper-slide">
-                                            <img src="assets/img/titan.png" alt="" />
+                                            <img src="assets/img/titan.jpg" alt="" />
                                         </div>
 
                                         <div className="swiper-slide">
-                                            <img src="assets/img/titan1.png" alt="" />
+                                            <img src="assets/img/titan1.jpg" alt="" />
                                         </div>
+
+                                        <div className="swiper-slide">
+                                            <img src="assets/img/titan2.jpg" alt="" />
+                                        </div>
+
                                     </div>
                                     <div className="swiper-pagination"></div>
                                 </div>

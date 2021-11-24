@@ -35,15 +35,15 @@ const Research = () => {
                                     <div className="swiper-wrapper align-items-center"> 
 
                                         <div className="swiper-slide">
-                                            <img src="assets/img/research-img.png" alt="" />
+                                            <img src="assets/img/imp-result3-pic.jpg" alt="" />
                                         </div>
 
                                         <div className="swiper-slide">
-                                            <img src="assets/img/imp-result3-pic.png" alt="" />
+                                            <img src="assets/img/imp-result2pic.jpg" alt="" />
                                         </div>
 
                                         <div className="swiper-slide">
-                                            <img src="assets/img/imp-result4-pic.png" alt="" />
+                                            <img src="assets/img/imp-result4-pic.jpg" alt="" />
                                         </div>
                                     </div>
                                     <div className="swiper-pagination"></div>
