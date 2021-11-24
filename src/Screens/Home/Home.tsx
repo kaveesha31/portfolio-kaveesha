@@ -9,12 +9,20 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Validator from "../../Common/validations";
+import { LinearProgress } from "@mui/material";
 
 interface Feedback {
     name: string;
     email: string;
     subject: string;
     message: string;
+    mobileNumber: string;
+    nameError: string;
+    emailError: string;
+    subjectError: string;
+    messageError: string;
+    mobileNumberError: string;
 }
 
 const initFeedback: Feedback = {
@@ -22,11 +30,18 @@ const initFeedback: Feedback = {
     email: "",
     subject: "",
     message: "",
+    mobileNumber: "",
+    nameError: "",
+    emailError: "",
+    subjectError: "",
+    messageError: "",
+    mobileNumberError: "",
 }
 
 const Home = () => {
 
     const [feedback, setFeedback] = useState(initFeedback);
+    const [loading, setLoading] = useState(false);
 
     console.log("feedback", feedback);
 
@@ -41,6 +56,7 @@ const Home = () => {
 
 
     const handleFeedback = () => {
+        setLoading(true);
         return saveFeedbackInFirestore({
             name: feedback.name,
             email: feedback.email,
@@ -50,12 +66,56 @@ const Home = () => {
             .then((savedUser) => {
                 setFeedback(initFeedback);
                 console.log("Feedback Sent");
+                setLoading(false);
             })
             .catch((errorFirestore) => {
                 console.log("Save user in Firestore failed - ", errorFirestore.message);
-            }).finally(()=> {
+            }).finally(() => {
                 setFeedback(initFeedback);
             });
+    };
+
+    const validateFormData = (): boolean => {
+        const emValidation = Validator.validateEmail(feedback.email);
+
+        const nameValidation = Validator.validateString(
+            feedback.name,
+            "Name",
+            3,
+            100
+        );
+
+        const subValidation = Validator.validateString(
+            feedback.subject,
+            "Subject",
+            3,
+            100
+        );
+        const msgValidation = Validator.validateString(
+            feedback.message,
+            "Message",
+            3,
+            3000
+        );
+
+        const MobValidation = Validator.validatePhoneNumber(feedback.mobileNumber);
+
+        setFeedback({
+            ...feedback,
+            emailError: emValidation.message,
+            nameError: nameValidation.message,
+            subjectError: subValidation.message,
+            mobileNumberError: MobValidation.message,
+            messageError: msgValidation.message,
+        });
+
+        return (
+            emValidation.isValid &&
+            nameValidation.isValid &&
+            subValidation.isValid &&
+            msgValidation.isValid &&
+            MobValidation.isValid
+        );
     };
 
     return (
@@ -116,28 +176,25 @@ const Home = () => {
                                                         <p><span className="title-s">Profile: </span> <span>full stack developer</span></p>
                                                         <p><span className="title-s">Email: </span> <span>kaveesha.rathnaka@gmail.com</span></p>
                                                         <p><span className="title-s">Phone: </span> <span>071-7431641 / 0760205463</span></p>
+                                                        <p><span className="title-s">CV   &emsp; : </span> <a href="assets\cv\Kaveesha Rathnayaka_SE.pdf" download> Download my CV</a></p>
                                                     </div>
                                                 </div>
+                                            </div><br />
+                                            <div className="title-box-2">
+                                                <h5 className="title-left">
+                                                    WORKING EXPERIENCE
+                                                </h5>
                                             </div>
-                                            <div className="skill-mf">
-                                                <p className="title-s">Skill</p>
-                                                <span>HTML</span> <span className="pull-right">85%</span>
-                                                <div className="progress">
-                                                    <div className="progress-bar" role="progressbar" style={{ width: "85%" }} aria-valuenow={85} aria-valuemin={0} aria-valuemax={100}></div>
-                                                </div>
-                                                <span>CSS3</span> <span className="pull-right">75%</span>
-                                                <div className="progress">
-                                                    <div className="progress-bar" role="progressbar" style={{ width: "75%" }} aria-valuenow={75} aria-valuemin={0} aria-valuemax={100}></div>
-                                                </div>
-                                                <span>PHP</span> <span className="pull-right">50%</span>
-                                                <div className="progress">
-                                                    <div className="progress-bar" role="progressbar" style={{ width: "50%" }} aria-valuenow={50} aria-valuemin={0} aria-valuemax={100}></div>
-                                                </div>
-                                                <span>JAVASCRIPT</span> <span className="pull-right">90%</span>
-                                                <div className="progress">
-                                                    <div className="progress-bar" role="progressbar" style={{ width: "90%" }} aria-valuenow={90} aria-valuemin={0} aria-valuemax={100}></div>
-                                                </div>
-                                            </div>
+                                            <p className="lead">
+                                                <strong> Trainee Associate Software Engineer</strong><br />
+                                                &emsp; at <strong>Syntax Genie (Pvt) Ltd </strong><br />
+                                                &emsp; 18 / July / 2020 to 15 / January / 2021<br />
+                                                &emsp; contributed to the development and bug resolving of two projects<br />
+                                                &emsp; (Innovation Nation / Alta Vision Web).<br /><br />
+                                                <strong>Freelance Developer</strong><br />
+                                                &emsp; April / 2021 to Present. <br />
+                                                &emsp; Contributed to 5 projects.
+                                            </p>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="about-me pt-4 pt-md-0">
@@ -155,17 +212,34 @@ const Home = () => {
                                                     pressure and excited to learn new
                                                     technologies.
 
-                                                </p>
-                                                {/* <p className="lead">
-                                                    Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vivamus suscipit tortor eget felis
-                                                    porttitor volutpat. Vestibulum
-                                                    ac diam sit amet quam vehicula elementum sed sit amet dui. porttitor at sem.
+                                                </p><br />
+                                                <div className="title-box-2">
+                                                    <h5 className="title-left">
+                                                        Education
+                                                    </h5>
+                                                </div>
+                                                <p className="lead">
+                                                    <div><img style={{height:"60px", width:"60px"}} alt="" src="assets/img/uom.jpg"/></div>
+                                                    <strong>University Of Moratuwa : </strong> <br />
+                                                    B.Sc. (Hons) Degree in information Technology and Management
                                                 </p>
                                                 <p className="lead">
-                                                    Nulla porttitor accumsan tincidunt. Quisque velit nisi, pretium ut lacinia in, elementum id enim.
-                                                    Nulla porttitor accumsan
-                                                    tincidunt. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                                                </p> */}
+                                                <div><img alt="" style={{height:"60px", width:"60px"}} src="assets/img/ac.jpg"/></div>
+                                                    <strong>Ananda College – Colombo 10 : </strong> <br />
+                                                    G.C.E. Advanced Level (2016) <br /> &emsp; Economics – A, Political Science – A, Logic -B,
+                                                    Z score - 1.8534. <br /> G.C.E. Ordinary Level (2013) <br /> &emsp; A – 6, B – 3
+                                                </p>
+                                                <p className="lead">
+                                                <div><img alt="" style={{height:"50px", width:"50px"}} src="assets/img/aq.jpg"/></div>
+                                                    <strong>Aquinas University College : </strong> <br />
+                                                    &emsp;Associated Diploma in Information and Technology (2017) <br />
+                                                    &emsp;English language and Literature – Intermediate level (2017)
+                                                </p>
+                                                <p className="lead">
+                                                <div><img alt="" style={{height:"50px", width:"50px"}} src="assets/img/brit.jpg"/></div>
+                                                    <strong>British Way English Academy : </strong> <br />
+                                                    &emsp;Diploma in English Language (2014)
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -469,21 +543,21 @@ const Home = () => {
                     <div className="container">
                         <div className="row">
                             <div className="col-md-12">
-                            <div className="col-sm-12">
-                                <div className="title-box text-center">
-                                    <h3 className="title-a">
-                                        Tecnologies
-                                    </h3>
-                                    <div className="line-mf"></div>
+                                <div className="col-sm-12">
+                                    <div className="title-box text-center">
+                                        <h3 className="title-a">
+                                            Tecnologies
+                                        </h3>
+                                        <div className="line-mf"></div>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-md-2">
                                 <div className="service-box">
                                     <div className="service-ico">
-                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/react.jpg"/></span>
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/react.jpg" /></span>
                                     </div>
                                     <div className="service-content">
                                         <h2 className="s-title">React</h2>
@@ -493,7 +567,7 @@ const Home = () => {
                             <div className="col-md-2">
                                 <div className="service-box">
                                     <div className="service-ico">
-                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/angular.jpg"/></span>
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/angular.jpg" /></span>
                                     </div>
                                     <div className="service-content">
                                         <h2 className="s-title">Angular</h2>
@@ -503,7 +577,7 @@ const Home = () => {
                             <div className="col-md-2">
                                 <div className="service-box">
                                     <div className="service-ico">
-                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/Firebase.jpg"/></span>
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/Firebase.jpg" /></span>
                                     </div>
                                     <div className="service-content">
                                         <h2 className="s-title">Firebase</h2>
@@ -513,7 +587,48 @@ const Home = () => {
                             <div className="col-md-2">
                                 <div className="service-box">
                                     <div className="service-ico">
-                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/html.jpg"/></span>
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/python.jpg" /></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">Python</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/java.jpg" /></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">Java</h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/C.jpg" /></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">C</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/ts.jpg" /></span>
+                                    </div>
+                                    <div className="service-content">
+                                        <h2 className="s-title">Typescript</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-2">
+                                <div className="service-box">
+                                    <div className="service-ico">
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/html.jpg" /></span>
                                     </div>
                                     <div className="service-content">
                                         <h2 className="s-title">HTML</h2>
@@ -523,7 +638,7 @@ const Home = () => {
                             <div className="col-md-2">
                                 <div className="service-box">
                                     <div className="service-ico">
-                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/css.jpg"/></span>
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/css.jpg" /></span>
                                     </div>
                                     <div className="service-content">
                                         <h2 className="s-title">CSS</h2>
@@ -533,7 +648,7 @@ const Home = () => {
                             <div className="col-md-2">
                                 <div className="service-box">
                                     <div className="service-ico">
-                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/js.jpg"/></span>
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/js.jpg" /></span>
                                     </div>
                                     <div className="service-content">
                                         <h2 className="s-title">Javascript</h2>
@@ -543,7 +658,7 @@ const Home = () => {
                             <div className="col-md-2">
                                 <div className="service-box">
                                     <div className="service-ico">
-                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/bootstrap.jpg"/></span>
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/bootstrap.jpg" /></span>
                                     </div>
                                     <div className="service-content">
                                         <h2 className="s-title">Bootstrap</h2>
@@ -553,7 +668,7 @@ const Home = () => {
                             <div className="col-md-2">
                                 <div className="service-box">
                                     <div className="service-ico">
-                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/NodeJS.jpg"/></span>
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/NodeJS.jpg" /></span>
                                     </div>
                                     <div className="service-content">
                                         <h2 className="s-title">NodeJS</h2>
@@ -563,7 +678,7 @@ const Home = () => {
                             <div className="col-md-2">
                                 <div className="service-box">
                                     <div className="service-ico">
-                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/MongoDB.jpg"/></span>
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/MongoDB.jpg" /></span>
                                     </div>
                                     <div className="service-content">
                                         <h2 className="s-title">MongoDB</h2>
@@ -573,7 +688,7 @@ const Home = () => {
                             <div className="col-md-2">
                                 <div className="service-box">
                                     <div className="service-ico">
-                                        <span className="ico-circle"><img style={{height:"120px"}} alt="" src="assets/img/sql.jpg"/></span>
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/sql.jpg" /></span>
                                     </div>
                                     <div className="service-content">
                                         <h2 className="s-title">SQL</h2>
@@ -583,7 +698,7 @@ const Home = () => {
                             <div className="col-md-2">
                                 <div className="service-box">
                                     <div className="service-ico">
-                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/git.jpg"/></span>
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/git.jpg" /></span>
                                     </div>
                                     <div className="service-content">
                                         <h2 className="s-title">Git</h2>
@@ -593,15 +708,14 @@ const Home = () => {
                             <div className="col-md-2">
                                 <div className="service-box">
                                     <div className="service-ico">
-                                        <span className="ico-circle"><img style={{height:"150px"}} alt="" src="assets/img/trello.jpg"/></span>
+                                        <span className="ico-circle"><img style={{ height: "150px" }} alt="" src="assets/img/trello.jpg" /></span>
                                     </div>
                                     <div className="service-content">
                                         <h2 className="s-title">Trello</h2>
                                     </div>
                                 </div>
                             </div>
-
-                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -727,95 +841,157 @@ const Home = () => {
                                     <div id="contact" className="box-shadow-full">
                                         <div className="row">
                                             <div className="col-md-6">
-                                                <div className="title-box-2">
-                                                    <h5 className="title-left">
-                                                        Send Message Us
-                                                    </h5>
-                                                </div>
-                                                <div>
-                                                    <Box component="form" noValidate sx={{ mt: 3 }}>
-                                                        <Grid container spacing={2}>
-                                                        <Grid item xs={12}>
-                                                                <TextField
-                                                                    required
+                                                <section className="ftco-section ftco-no-pt ftco-no-pb contact-section">
+                                                    <div className="container">
+                                                        <div className="row d-flex align-items-stretch no-gutters">
+                                                                <div>
+                                                                    <span style={{ textAlign: "center" }}>
+                                                                        <h2>Contact Us.</h2>
+                                                                    </span>
+                                                                </div>
+                                                                <form noValidate>
+                                                                    <Grid container spacing={1}>
+                                                                        <Grid item xs={12}>
+                                                                            <TextField
+                                                                                error={feedback.nameError ? true : false}
+                                                                                helperText={feedback.nameError}
+                                                                                required
+                                                                                value={feedback.name}
+                                                                                onChange={(e) => {
+                                                                                    setFeedback({
+                                                                                        ...feedback,
+                                                                                        name: e.target.value,
+                                                                                        nameError: "",
+                                                                                    });
+                                                                                }}
+                                                                                variant="outlined"
+                                                                                margin="normal"
+                                                                                fullWidth
+                                                                                id="name"
+                                                                                label="Your Name"
+                                                                                name="name"
+                                                                                autoComplete="name"
+                                                                                multiline
+                                                                            />
+                                                                        </Grid>
+                                                                        <Grid item xs={12}>
+                                                                            <TextField
+                                                                                error={feedback.emailError ? true : false}
+                                                                                helperText={feedback.emailError}
+                                                                                required
+                                                                                value={feedback.email}
+                                                                                onChange={(e) => {
+                                                                                    setFeedback({
+                                                                                        ...feedback,
+                                                                                        email: e.target.value,
+                                                                                        emailError: "",
+                                                                                    });
+                                                                                }}
+                                                                                variant="outlined"
+                                                                                margin="normal"
+                                                                                fullWidth
+                                                                                id="email"
+                                                                                label="Your Email"
+                                                                                name="email"
+                                                                                autoComplete="email"
+                                                                                multiline
+                                                                            />
+                                                                        </Grid>
+                                                                        <Grid item xs={12}>
+                                                                            <TextField
+                                                                                error={feedback.mobileNumberError ? true : false}
+                                                                                helperText={feedback.mobileNumberError}
+                                                                                required
+                                                                                value={feedback.mobileNumber}
+                                                                                onChange={(e) => {
+                                                                                    setFeedback({
+                                                                                        ...feedback,
+                                                                                        mobileNumber: e.target.value,
+                                                                                        mobileNumberError: "",
+                                                                                    });
+                                                                                }}
+                                                                                variant="outlined"
+                                                                                margin="normal"
+                                                                                fullWidth
+                                                                                id="mobileNumber"
+                                                                                label="Your Mobile Number"
+                                                                                name="mobileNumber"
+                                                                                autoComplete="mobileNumber"
+                                                                                multiline
+                                                                            />
+                                                                        </Grid>
+                                                                        <Grid item xs={12}>
+                                                                            <TextField
+                                                                                error={feedback.subjectError ? true : false}
+                                                                                helperText={feedback.subjectError}
+                                                                                required
+                                                                                value={feedback.subject}
+                                                                                onChange={(e) => {
+                                                                                    setFeedback({
+                                                                                        ...feedback,
+                                                                                        subject: e.target.value,
+                                                                                        subjectError: "",
+                                                                                    });
+                                                                                }}
+                                                                                variant="outlined"
+                                                                                margin="normal"
+                                                                                fullWidth
+                                                                                id="subject"
+                                                                                label="Subject"
+                                                                                name="subject"
+                                                                                autoComplete="subject"
+                                                                                multiline
+                                                                            />
+                                                                        </Grid>
+                                                                        <Grid item xs={12}>
+                                                                            <TextField
+                                                                                error={feedback.messageError ? true : false}
+                                                                                helperText={feedback.messageError}
+                                                                                required
+                                                                                value={feedback.message}
+                                                                                onChange={(e) => {
+                                                                                    setFeedback({
+                                                                                        ...feedback,
+                                                                                        message: e.target.value,
+                                                                                        messageError: "",
+                                                                                    });
+                                                                                }}
+                                                                                variant="outlined"
+                                                                                margin="normal"
+                                                                                fullWidth
+                                                                                id="message"
+                                                                                label="Your Message"
+                                                                                name="message"
+                                                                                autoComplete="message"
+                                                                                minRows={10}
+                                                                                multiline
+                                                                            />
+                                                                        </Grid>
+                                                                    </Grid>
+                                                                </form>
+                                                                {loading && (
+                                                                    <div style={{padding:"10px"}}>
+                                                                        <LinearProgress color="primary" />
+                                                                    </div>
+                                                                )}
+                                                                <Button
+                                                                    type="submit"
                                                                     fullWidth
-                                                                    id="name"
-                                                                    label="Name"
-                                                                    name="name"
-                                                                    autoComplete="name"
-                                                                    onChange={(e) => {
-                                                                        setFeedback({
-                                                                            ...feedback,
-                                                                            name: e.target.value
-                                                                        });
+                                                                    variant="contained"
+                                                                    color="primary"
+                                                                    onClick={(e: any) => {
+                                                                        e.preventDefault();
+                                                                        validateFormData() && handleFeedback();
                                                                     }}
-                                                                />
-                                                            </Grid>
-                                                            <Grid item xs={12}>
-                                                                <TextField
-                                                                    required
-                                                                    fullWidth
-                                                                    id="email"
-                                                                    label="Email Address"
-                                                                    name="email"
-                                                                    autoComplete="email"
-                                                                    onChange={(e) => {
-                                                                        setFeedback({
-                                                                            ...feedback,
-                                                                            email: e.target.value
-                                                                        });
-                                                                    }}
-                                                                />
-                                                            </Grid>
-                                                            <Grid item xs={12}>
-                                                                <TextField
-                                                                    required
-                                                                    fullWidth
-                                                                    name="subject"
-                                                                    label="Subject"
-                                                                    id="subject"
-                                                                    autoComplete="subject"
-                                                                    onChange={(e) => {
-                                                                        setFeedback({
-                                                                            ...feedback,
-                                                                            subject: e.target.value
-                                                                        });
-                                                                    }}
-                                                                />
-                                                            </Grid>
-                                                            <Grid item xs={12}>
-                                                                <TextField
-                                                                    required
-                                                                    fullWidth
-                                                                    name="message"
-                                                                    label="Message"
-                                                                    id="message"
-                                                                    autoComplete="message"
-                                                                    multiline
-                                                                    minRows={5}
-                                                                    onChange={(e) => {
-                                                                        setFeedback({
-                                                                            ...feedback,
-                                                                            message: e.target.value
-                                                                        });
-                                                                    }}
-                                                                />
-                                                            </Grid>
-                                                        </Grid>
-                                                        <Button
-                                                            type="submit"
-                                                            fullWidth
-                                                            variant="contained"
-                                                            sx={{ mt: 3, mb: 2 }}
-                                                            onClick={(e:any)=>{
-                                                                e.preventDefault();
-                                                                handleFeedback();
-                                                            }}
-                                                        >
-                                                            Send Feedback
-                                                        </Button>
-                                                    </Box>
-                                                </div>
+                                                                >
+                                                                    Send Feedback
+                                                                </Button>
+                                                            <div className="col-md-6 d-flex align-items-stretch">
+                                                                <div id="map"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="title-box-2 pt-4 pt-md-0">
@@ -837,10 +1013,8 @@ const Home = () => {
                                                 </div>
                                                 <div className="socials">
                                                     <ul>
-                                                        <li><a href=""><span className="ico-circle"><i className="bi bi-facebook"></i></span></a></li>
-                                                        <li><a href=""><span className="ico-circle"><i className="bi bi-instagram"></i></span></a></li>
-                                                        <li><a href=""><span className="ico-circle"><i className="bi bi-twitter"></i></span></a></li>
-                                                        <li><a href=""><span className="ico-circle"><i className="bi bi-linkedin"></i></span></a></li>
+                                                        <li><a href="https://github.com/kaveesha31"><span className="ico-circle"><i className="bi bi-github"></i></span></a></li>
+                                                        <li><a href="https://www.linkedin.com/in/kaveesha-rathnayaka-a96b26197/"><span className="ico-circle"><i className="bi bi-linkedin"></i></span></a></li>
                                                     </ul>
                                                 </div>
                                             </div>

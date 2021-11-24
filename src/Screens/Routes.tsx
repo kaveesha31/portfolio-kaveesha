@@ -13,12 +13,6 @@ const Routes = () => {
     return (
         <Router basename="/">
             <Switch>
-                <Route
-                    path="/home"
-                    component={() => {
-                        return <Home />;
-                    }}
-                />
                  <Route
                     path="/bsc"
                     component={() => {
@@ -53,6 +47,12 @@ const Routes = () => {
                     path="/inn-nation"
                     component={() => {
                         return <InnovationNation />;
+                    }}
+                />
+                <Route
+                    path="/"
+                    component={() => {
+                        return <Home />;
                     }}
                 />
             </Switch>
